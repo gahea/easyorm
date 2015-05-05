@@ -17,8 +17,8 @@ json으로 저장된 데이터의 경우 배열로 치환하여 호출함
 
 ## 사용법
 
-*MY_Model.php 를 다운받아 core 폴더에 저장함
-*사용자 모델을 CI_Model에서 MY_Model로 확장함
+* MY_Model.php 를 다운받아 core 폴더에 저장함
+* 사용자 모델을 CI_Model에서 MY_Model로 확장함
 
 Model
 ```
