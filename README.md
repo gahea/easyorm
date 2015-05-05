@@ -13,7 +13,7 @@ Codeigniter ORM - easy, easy, easy
 
 Model
 ```
-  class Usermodel extends CI_Model{
+  class Usermodel extends MY_Model{
     
     var $id = 0;
     var $screenname = '';
