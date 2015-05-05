@@ -133,7 +133,7 @@ class MY_Model extends CI_Model{
 		}
 
 		$this->db->where($this->_getKey(), $this->{$this->_getKey()});
-		$this->db->update($this->_prefix.$this->_table);
+		$this->db->update($this->_prefix.$this->_getTable());
 
 
 	}
@@ -148,12 +148,8 @@ class MY_Model extends CI_Model{
 			throw new Exception("entity key can't be null");
 		}
 
-    if(method_exists($this, 'prepersist')){
-			$this->predelete();
-		}
-
 		$this->db->where($this->_getKey(), $keyValue);
-		$this->db->delete($this->_prefix.$this->_table);
+		$this->db->delete($this->_prefix.$this->_getTable());
 
 	}
 
@@ -168,7 +164,7 @@ class MY_Model extends CI_Model{
 		}
 
 		$this->db->where($this->_getKey(), $keyValue);
-		$query = $this->db->get($this->_prefix.$this->_table);
+		$query = $this->db->get($this->_prefix.$this->_getTable());
 
 		if($query->num_rows() == 0){
 			show_404();
@@ -183,8 +179,26 @@ class MY_Model extends CI_Model{
 	}
 
 	private function _getKey(){
-		return $this->_key;
 
+		$id = $this->_key;
+
+		if(empty($id)){
+			$id = 'id';
+		}
+
+		return $id;
+
+	}
+
+	private function _getTable(){
+
+		$table = $this->_table;
+
+		if(empty($table)){
+			$table = get_class($this);
+		}
+
+		return $table;
 	}
 
 	private function _isJson($string){
