@@ -107,6 +107,7 @@ Controller
     
     public function upAction(){
 
+      $this->usermodel->get($this->input->post('id'));
       $this->usermodel->initialize($this->input->post(), array('id'));
 
       // 업데이트
