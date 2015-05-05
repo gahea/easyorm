@@ -71,7 +71,8 @@ Controller
       $this->load->model('usermodel');
       
       // 모델에 포스트로 넘어온값 바인딩
-      $this->usermodel->initialize($this->input->post(), array('screenname', 'password'));
+      // 2번째 파라미터는 바인딩을 제외하는 컬럼을 지정 (id, 아이피등)
+      $this->usermodel->initialize($this->input->post(), array('id'));
       
       // 저장하기
       $this->usermodel->save();
