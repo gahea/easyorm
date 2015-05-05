@@ -5,11 +5,20 @@ Codeigniter ORM - easy, easy, easy
 
 ## 소개
 
-코드이그나이터 모델을 확장하여 CRUD를 제공하는 확장 클래스 입니다.
+JAVA jpa에 영감을 받아 만든 코드이그나이터 모델을 확장하여 CRUD를 제공하는 확장 클래스 입니다.
 
 
+## 특징
+
+Codeigniter 기반
+모델과 컬럼을 1:1로 매칭함
+property가 배열일경우 json으로 치환하여 저장함
+json으로 저장된 데이터의 경우 배열로 치환하여 호출함
 
 ## 사용법
+
+*MY_Model.php 를 다운받아 core 폴더에 저장함
+*사용자 모델을 CI_Model에서 MY_Model로 확장함
 
 Model
 ```
@@ -18,10 +27,13 @@ Model
     var $id = 0;
     var $screenname = '';
     var $password = '';
+    var $hobbies = array();
     var $regDate = '';
     var $lastDate = '';
     var $regIp = '';
     
+    
+    // _(언더스코어)로 시작되는 컬럼은 ORM에서 무시함
     var $_key = 'id';
     var $_table = 'user';
 
