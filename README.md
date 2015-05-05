@@ -25,14 +25,20 @@ Model
     var $_key = 'id';
     var $_table = 'user';
 
-    // 데이터가 저장되기전 처리내역
+    // 데이터가 저장되기전 처리
     public function prepersist(){
       $this->regDate = 'NOW()';
       $this->regIp = $this->input->ip_addresss();
     }
     
+    // 데이터가 업데이트 되기 전 처리
     public function preupdate(){
       $this->lastDate = 'NOW()';
+    }
+
+    // 데이터가 삭제되기 전 처리
+    public function predelete(){
+      log('삭제됨 :' . date('y-m-d h:i:s')'
     }
 
   }
