@@ -90,7 +90,7 @@ class MY_Model extends CI_Model{
 		}
 
 		if(method_exists($this, 'preupdate')){
-			$this->prepersist();
+			$this->preupdate();
 		}
 
 		foreach (get_object_vars($this) as $key => $value) {
@@ -146,6 +146,10 @@ class MY_Model extends CI_Model{
 
 		if (empty($keyValue)){
 			throw new Exception("entity key can't be null");
+		}
+
+		if(method_exists($this, 'predelete')){
+			$this->predelete();
 		}
 
 		$this->db->where($this->_getKey(), $keyValue);
