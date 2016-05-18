@@ -48,10 +48,6 @@ class MY_Model extends CI_Model{
 
 	public function save(){
 
-		if(method_exists($this, 'prepersist')){
-			$this->prepersist();
-		}
-
 		foreach (get_object_vars($this) as $key => $value) {
 
 			if ($key == $this->_getKey()) {
@@ -75,7 +71,11 @@ class MY_Model extends CI_Model{
 
 		}
 
-		$this->db->insert($this->_prefix.$this->_table);
+		if(method_exists($this, 'prepersist')){
+			$this->prepersist();
+		}
+
+		$this->db->insert($this->_table);
 
 		$this->{$this->_getKey()} = $this->db->insert_id();
 
@@ -87,10 +87,6 @@ class MY_Model extends CI_Model{
 
 		if (empty($this->{$this->_getKey()})) {
 			throw new Exception("do get before update");
-		}
-
-		if(method_exists($this, 'preupdate')){
-			$this->preupdate();
 		}
 
 		foreach (get_object_vars($this) as $key => $value) {
@@ -133,7 +129,12 @@ class MY_Model extends CI_Model{
 		}
 
 		$this->db->where($this->_getKey(), $this->{$this->_getKey()});
-		$this->db->update($this->_prefix.$this->_getTable());
+
+		if(method_exists($this, 'preupdate')){
+			$this->preupdate();
+		}
+
+		$this->db->update($this->_getTable());
 
 
 	}
@@ -148,12 +149,13 @@ class MY_Model extends CI_Model{
 			throw new Exception("entity key can't be null");
 		}
 
+		$this->db->where($this->_getKey(), $keyValue);
+
 		if(method_exists($this, 'predelete')){
 			$this->predelete();
 		}
 
-		$this->db->where($this->_getKey(), $keyValue);
-		$this->db->delete($this->_prefix.$this->_getTable());
+		$this->db->delete($this->_getTable());
 
 	}
 
@@ -168,7 +170,7 @@ class MY_Model extends CI_Model{
 		}
 
 		$this->db->where($this->_getKey(), $keyValue);
-		$query = $this->db->get($this->_prefix.$this->_getTable());
+		$query = $this->db->get($this->_getTable());
 
 		if($query->num_rows() == 0){
 			show_404();
@@ -202,7 +204,7 @@ class MY_Model extends CI_Model{
 			$table = get_class($this);
 		}
 
-		return $table;
+		return $this->_prefix.$table;
 	}
 
 	private function _isJson($string){
