@@ -21,6 +21,10 @@ class MY_Model extends CI_Model{
 
 			foreach ($values as $key => $value) {
 
+				if ($key == $this->_getKey()) {
+					continue;
+				}
+	
 				if(substr($key,0,1) == '_'){
 					continue;
 				}
@@ -91,14 +95,12 @@ class MY_Model extends CI_Model{
 
 		foreach (get_object_vars($this) as $key => $value) {
 
-			if(substr($key,0,1) == '_'){
-				continue;
-
-			}
-
 			if ($key == $this->_getKey()) {
 				continue;
+			}
 
+			if(substr($key,0,1) == '_'){
+				continue;
 			}
 
 			if (is_array($inc) && count($inc) > 0) {
